@@ -1,0 +1,6 @@
+{
+    "workspaceKeybindings.keybinging.ctrlenterruncode.enabled": true,
+    "files.associations": {
+        "stdlib.h": "c"
+    }
+}
