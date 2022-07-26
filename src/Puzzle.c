@@ -15,11 +15,13 @@ typedef struct NodeChild
 {
 	int *state; //Table
 	int hamming_val; //Hamming value for current node 
-	int frozen_moves[3]; // List of frozen moves
+	int *frozen_moves; // List of frozen moves
 	int frozen_moves_len; //Length of valid frozen moves
 	struct NodeChild *parentNode; //Origin node
 	struct NodeChild **childrenNodes; // List of children Nodes
 	int childrenNodesLen; //Length of list of children nodes
+	int rootNode; //Is it root seeding node? 0/1
+	int zpos;
 } Node;
 
 // Tools
@@ -214,66 +216,73 @@ int get_manhattan_and_hamming_for_move(int *move, int *table, int*zero_pos){
 	return val;
 }
 int total_itr = 0;
-void seed_node(int *oldtable, int*frozenmove){
-	int i;
-	int zpos;
-	int *ntable;
-	int nfrozenove[2];
-	int mhval, bestmoveindex = 0, leastmhval=9999;
-	int nodalmhvals[3][4];int nodalmhvalslen = 0; //{index,mhval,zpos}
-	int *nodetables[3];
 
 
-	if(verify_win(oldtable)){
-		solved = 1;
-		printf("Solved");
-		return;
-	}
-	if(solved) {return ;printf("It has been solved");}
-
-	total_itr+=1;
-	if(total_itr>=3) {printf("forced termination");exit(0);};
-
-	// print_game(ntable);
-	for(i=0;i<4;i++){
-		ntable = create_table_copy(oldtable, &zpos);
-		if(possible_hole_moves[i][0] == frozenmove[0] && possible_hole_moves[i][1] == frozenmove[1]){
-			// printf("move (%d %d) is frozen\n", possible_hole_moves[i][0],possible_hole_moves[i][1]);
-			continue;
-		}
-		change_hole_pos_ref(possible_hole_moves[i][0], possible_hole_moves[i][1],&zpos, ntable);
-		mhval = calc_manhattan_and_hamming(ntable);
-		if(mhval == -1){
-			// printf("mhval(%d %d) == -1\n", possible_hole_moves[i][0],possible_hole_moves[i][1]);
-			continue;
-		}
-		nfrozenove[0] = possible_hole_moves[i][0];
-		nfrozenove[1] = possible_hole_moves[i][1];
-
-		// printf("added node\n");
-
-		nodalmhvals[nodalmhvalslen][0] = i; //index of (rn made move)/frozenmove
-		nodalmhvals[nodalmhvalslen][1] = mhval; // mh val of current state after move
-		nodalmhvals[nodalmhvalslen][2] = zpos; //zpos of new move
-		nodetables[nodalmhvalslen] = ntable;
-		nodalmhvalslen+=1;
-
-		if(mhval<=leastmhval){
-			leastmhval = mhval;
-			// seed_node(ntable, nfrozenove);
-		}
-	}
-	// printf("Seeding check %d %d", leastmhval, noda);
-	for(i=0; i<nodalmhvalslen;i++){
-		if(nodalmhvals[i][1] == leastmhval){
-			printf("Seeding %d %d \n ", possible_hole_moves[nodalmhvals[i][0]][0],possible_hole_moves[nodalmhvals[i][0]][1]);
-			print_game(nodetables[i]);
-			seed_node(nodetables[i], possible_hole_moves[nodalmhvals[i][0]]);
-		}
-	}
+void seed_node(Node rootNode){
+	
 }
 
-void solve_bruteforce(int *oldtable, int *zpos, int*frozenmove){
+
+void seed_node2(int *oldtable, int*frozenmove){
+	// int i;
+	// int zpos;
+	// int *ntable;
+	// int nfrozenove[2];
+	// int mhval, bestmoveindex = 0, leastmhval=9999;
+	// int nodalmhvals[3][4];int nodalmhvalslen = 0; //{index,mhval,zpos}
+	// int *nodetables[3];
+
+
+	// if(verify_win(oldtable)){
+	// 	solved = 1;
+	// 	printf("Solved");
+	// 	return;
+	// }
+	// if(solved) {return ;printf("It has been solved");}
+
+	// total_itr+=1;
+	// if(total_itr>=3) {printf("forced termination");exit(0);};
+
+	// // print_game(ntable);
+	// for(i=0;i<4;i++){
+	// 	ntable = create_table_copy(oldtable, &zpos);
+	// 	if(possible_hole_moves[i][0] == frozenmove[0] && possible_hole_moves[i][1] == frozenmove[1]){
+	// 		// printf("move (%d %d) is frozen\n", possible_hole_moves[i][0],possible_hole_moves[i][1]);
+	// 		continue;
+	// 	}
+	// 	change_hole_pos_ref(possible_hole_moves[i][0], possible_hole_moves[i][1],&zpos, ntable);
+	// 	mhval = calc_manhattan_and_hamming(ntable);
+	// 	if(mhval == -1){
+	// 		// printf("mhval(%d %d) == -1\n", possible_hole_moves[i][0],possible_hole_moves[i][1]);
+	// 		continue;
+	// 	}
+	// 	nfrozenove[0] = possible_hole_moves[i][0];
+	// 	nfrozenove[1] = possible_hole_moves[i][1];
+
+	// 	// printf("added node\n");
+
+	// 	nodalmhvals[nodalmhvalslen][0] = i; //index of (rn made move)/frozenmove
+	// 	nodalmhvals[nodalmhvalslen][1] = mhval; // mh val of current state after move
+	// 	nodalmhvals[nodalmhvalslen][2] = zpos; //zpos of new move
+	// 	nodetables[nodalmhvalslen] = ntable;
+	// 	nodalmhvalslen+=1;
+
+	// 	if(mhval<=leastmhval){
+	// 		leastmhval = mhval;
+	// 		// seed_node(ntable, nfrozenove);
+	// 	}
+	// }
+	// // printf("Seeding check %d %d", leastmhval, noda);
+	// for(i=0; i<nodalmhvalslen;i++){
+	// 	if(nodalmhvals[i][1] == leastmhval){
+	// 		printf("Seeding %d %d \n ", possible_hole_moves[nodalmhvals[i][0]][0],possible_hole_moves[nodalmhvals[i][0]][1]);
+	// 		print_game(nodetables[i]);
+	// 		// seed_node(nodetables[i], possible_hole_moves[nodalmhvals[i][0]]);
+	// 	}
+	// }
+}
+
+void solve_bruteforce(Node root){
 
 	int *cptable, i;
 	int test_zero_pos;
@@ -284,7 +293,8 @@ void solve_bruteforce(int *oldtable, int *zpos, int*frozenmove){
 	// 		// printf("move (%d %d) is frozen\n", possible_hole_moves[i][0],possible_hole_moves[i][1]);
 	// 		continue;
 	// 	}
-		seed_node(table,frozenmove);
+		// seed_node(table,frozenmove);
+		seed_node(root);
 		// mhval = get_manhattan_and_hamming_for_move(possible_hole_moves[i], cptable, zpos);
 		// if(mhval == -1) {
 			// printf("mhval(%d %d) == -1\n", possible_hole_moves[i][0],possible_hole_moves[i][1]);
@@ -316,7 +326,9 @@ void init_puzzle(){
 	table = malloc(dim*dim*sizeof(int));
 	fill_table_random();
 	print_game(table);
-	solve_bruteforce(table, &zero_pos,frozenmove);
+	Node rootNode = {.state=table,.hamming_val=0,.frozen_moves=NULL,.frozen_moves_len=0,.parentNode=NULL, .childrenNodes=NULL,.rootNode=0, .zpos=zero_pos};
+	// solve_bruteforce(table, &zero_pos,frozenmove);
+	solve_bruteforce(rootNode);
 	// change_hole_pos(-1,0);
 	printf("\nLatest solution is with %d iters:\n", total_itr);
 	print_game(table);
