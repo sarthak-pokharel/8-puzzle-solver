@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Mon Jul  4 10:41:11 2022
+# Make data base, printed on Tue Jul 26 17:07:14 2022
 
 # Variables
 
@@ -17,13 +17,9 @@ GDK_BACKEND = x11
 # environment
 LC_ALL = C
 # environment
-NO_AT_BRIDGE = 1
-# environment
 GNOME_SHELL_SESSION_MODE = ubuntu
 # environment
 SSH_AGENT_LAUNCHER = gnome-keyring
-# environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-24b94870-8a18-4bd9-a9d6-58a3beb18f0b.sock
 # environment
 MANDATORY_PATH = /usr/share/gconf/ubuntu-xorg.mandatory.path
 # environment
@@ -31,7 +27,7 @@ LC_NAME = en_US.UTF-8
 # environment
 LC_NUMERIC = en_US.UTF-8
 # environment
-VSCODE_CWD = /home/sarthak/coding/cproj-1stsem
+VSCODE_CWD = /home/sarthak/coding/clang/slidepuzzle
 # environment
 WINDOWPATH = 2
 # environment
@@ -49,7 +45,7 @@ VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # default
 .VARIABLES := 
 # environment
-PWD = /home/sarthak/coding/clang/template
+PWD = /home/sarthak/coding/clang/slidepuzzle
 # automatic
 %D = $(patsubst %/,%,$(dir $%))
 # environment
@@ -58,14 +54,12 @@ XDG_DATA_DIRS = /usr/share/ubuntu-xorg:/usr/local/share/:/usr/share/:/var/lib/sn
 OLDPWD = /home/sarthak/coding
 # automatic
 ^D = $(patsubst %/,%,$(dir $^))
-# environment
-VSCODE_LOG_STACK = false
 # automatic
 %F = $(notdir $%)
 # environment
 NVM_INC = /home/sarthak/.nvm/versions/node/v18.2.0/include/node
 # environment
-VSCODE_CODE_CACHE_PATH = /home/sarthak/.config/Code/CachedData/30d9c6cd9483b2cc586687151bcbcd635f373630
+VSCODE_CODE_CACHE_PATH = /home/sarthak/.config/Code/CachedData/3b889b090b5ad5793f524b5d1d39fda662b96a2a
 # environment
 LANG = C
 # environment
@@ -75,13 +69,11 @@ XAUTHORITY = /run/user/1000/gdm/Xauthority
 # default
 .INCLUDE_DIRS = /usr/local/include /usr/include /usr/include
 # environment
-GNOME_TERMINAL_SERVICE = :1.126
+GNOME_TERMINAL_SERVICE = :1.100
 # makefile
 MAKEFLAGS = pqrR
 # makefile
-CURDIR := /home/sarthak/coding/clang/template
-# environment
-VSCODE_PIPE_LOGGING = true
+CURDIR := /home/sarthak/coding/clang/slidepuzzle
 # environment
 APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
 # environment
@@ -107,18 +99,17 @@ MAKEFILE_LIST := Makefile
 # automatic
 @F = $(notdir $@)
 # environment
-VSCODE_VERBOSE_LOGGING = true
-# environment
-VSCODE_PID = 12012
+VSCODE_PID = 4101
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/sarthakpc:@/tmp/.ICE-unix/2099,unix/sarthakpc:/tmp/.ICE-unix/2099
+SESSION_MANAGER = local/sarthakpc:@/tmp/.ICE-unix/2450,unix/sarthakpc:/tmp/.ICE-unix/2450
 # automatic
 *F = $(notdir $*)
 # environment
+ 
 CHROME_DESKTOP = code-url-handler.desktop
 # environment
 DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus
@@ -143,7 +134,7 @@ XMODIFIERS = @im=ibus
 # environment
 SHLVL = 1
 # environment
-GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/ba6eed2a_205b_4b27_98e7_04ffbc039cc8
+GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/555c4f8f_133c_4113_9f8e_ae9dfeef8901
 # environment
 MAKELEVEL := 0
 # default
@@ -158,8 +149,6 @@ LC_MONETARY = en_US.UTF-8
 ^F = $(notdir $^)
 # environment
 LC_TIME = en_US.UTF-8
-# environment
-VSCODE_LOG_NATIVE = false
 # environment
 USERNAME = sarthak
 # environment
@@ -185,7 +174,7 @@ LOGNAME = sarthak
 # makefile
 .DEFAULT_GOAL := build
 # environment
-SYSTEMD_EXEC_PID = 2099
+SYSTEMD_EXEC_PID = 2600
 # environment
 DISPLAY = :0
 # environment
@@ -221,11 +210,9 @@ QT_IM_MODULE = ibus
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-VSCODE_IPC_HOOK = /run/user/1000/vscode-3d929c20-1.68.1-main.sock
+VSCODE_IPC_HOOK = /run/user/1000/vscode-3d929c20-1.69.2-main.sock
 # environment
 TERM = xterm-256color
-# environment
-GSETTINGS_SCHEMA_DIR = /home/sarthak/data
 # environment
 IM_CONFIG_PHASE = 1
 # environment
@@ -251,7 +238,7 @@ GDMSESSION = ubuntu-xorg
 # environment
 LC_IDENTIFICATION = en_US.UTF-8
 # variable set hash-table stats:
-# Load=119/1024=12%, Rehash=0, Collisions=13/149=9%
+# Load=112/1024=11%, Rehash=0, Collisions=12/142=8%
 
 # Pattern-specific Variable Values
 
@@ -259,9 +246,9 @@ LC_IDENTIFICATION = en_US.UTF-8
 
 # Directories
 
-# . (device 66306, inode 8001999): 7 files, no impossibilities.
+# . (device 66306, inode 8010108): 10 files, no impossibilities.
 
-# 7 files, no impossibilities in 1 directories.
+# 10 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -272,7 +259,7 @@ LC_IDENTIFICATION = en_US.UTF-8
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-27 09:55:31.945934732
+#  Last modified 2022-07-24 15:36:02.250917115
 #  File has been updated.
 #  Successfully updated.
 
@@ -295,10 +282,9 @@ build:
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 4):
 	rm build/* -rdf
-	gcc ./src/main.c -o build/Program -lm
+	gcc ./src/*.c -I src/headers/ -o build/Program -lm
 
 # files hash-table stats:
- 
 # Load=5/1024=0%, Rehash=0, Collisions=0/15=0%
 # VPATH Search Paths
 
@@ -306,12 +292,13 @@ build:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 12 / storage = 98 B / avg = 8 B
-# current buf: size = 8162 B / used = 98 B / count = 12 / avg = 8 B
+# strcache buffers: 1 (0) / strings = 15 / storage = 124 B / avg = 8 B
+# current buf: size = 8162 B / used = 124 B / count = 15 / avg = 8 B
 
-# strcache performance: lookups = 18 / hit rate = 33%
+ 
+# strcache performance: lookups = 21 / hit rate = 28%
 # hash-table stats:
-# Load=12/8192=0%, Rehash=0, Collisions=0/18=0%
-# Finished Make data base on Mon Jul  4 10:41:11 2022
+# Load=15/8192=0%, Rehash=0, Collisions=0/21=0%
+# Finished Make data base on Tue Jul 26 17:07:14 2022
 
  

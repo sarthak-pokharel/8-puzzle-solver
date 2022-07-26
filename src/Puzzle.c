@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
+#include "headers/Puzzle.h"
 
 // Puzzle State
 int dim = 3;
@@ -11,41 +12,53 @@ int zero_pos;
 int solved = 0;
 int shuffle_iterations = 6;
 
-typedef struct NodeChild
-{
-	int *state; //Table
-	int hamming_val; //Hamming value for current node 
-	int *frozen_moves; // List of frozen moves
-	int frozen_moves_len; //Length of valid frozen moves
-	struct NodeChild *parentNode; //Origin node
-	struct NodeChild **childrenNodes; // List of children Nodes
-	int childrenNodesLen; //Length of list of children nodes
-	int rootNode; //Is it root seeding node? 0/1
-	int zpos;
-} Node;
 
 // Tools
-int sgn(int x){return x>0?1:(x<0?-1:0);}
-int geti(int k){ return (k-1)/dim+1;}
-int getj(int k){ return (k-1)%dim+1; }
-int getij(int k, int *i, int *j){  *i = geti(k);  *j = getj(k); }
-int getk(int i, int j) { return dim*(i-1) + j; }
-int getelem_tableref(int index, int *table){ return table[index-1]; }
-int getelem(int index){ return getelem_tableref(index,table); }
-int setelem_tableref(int index,int val, int *table){ return table[index-1] = val; }
-int setelem(int index, int val){ setelem_tableref(index, val, table); }
-int setelemij(int i, int j, int val){ setelem(getk(i,j), val); }
-void swapmem(int *x, int *y){int tmp; tmp = *x; *x = *y; *y = tmp;}
+int sgn(int x){
+	return x>0?1:(x<0?-1:0);
+}
+int geti(int k){
+	return (k-1)/dim+1;
+}
+int getj(int k){
+	return (k-1)%dim+1;
+}
+int getij(int k, int *i, int *j){
+	*i = geti(k);  *j = getj(k);
+}
+int getk(int i, int j) {
+	return dim*(i-1) + j;
+}
+int getelem_tableref(int index, int *table){
+	return table[index-1];
+}
+int getelem(int index){
+	return getelem_tableref(index,table);
+}
+int setelem_tableref(int index,int val, int *table){
+	return table[index-1] = val;
+}
+int setelem(int index, int val){
+	setelem_tableref(index, val, table);
+}
+int setelemij(int i, int j, int val){
+	setelem(getk(i,j), val);
+}
+void swapmem(int *x, int *y){
+	int tmp; tmp = *x; *x = *y; *y = tmp;
+}
 void swapel_tableref(int k1, int k2, int*table){
 	int tmp;
 	tmp = getelem_tableref(k1, table);
 	setelem_tableref(k1, getelem_tableref(k2, table), table);
 	setelem_tableref(k2, tmp, table);
 }
-void swapel(int k1, int k2){ swapel_tableref(k1, k2, table); }
-
-int randomrange(int min, int max){ return rand() % (max + 1 - min) + min; }
-
+void swapel(int k1, int k2){
+	swapel_tableref(k1, k2, table);
+}
+int randomrange(int min, int max){
+	return rand() % (max + 1 - min) + min;
+}
 int calc_inversion_forel(int elv, int ind){
 	int k, max = dim*dim, el;
 	int inv = 0;
@@ -64,8 +77,6 @@ int calc_inversions(){
 	}
 	return total_inversions;
 }
-
-// Initialize table
 void fill_table_random(){
 	int i;
 	int r1, r2;
@@ -85,7 +96,6 @@ void fill_table_random(){
 	}
 	zero_pos = dim*dim;
 }
-
 void print_game(int *gamematrix){
 	int i,j,k,max;
 	int elem;
@@ -105,13 +115,11 @@ void print_game(int *gamematrix){
 	}
 	printf("\n");
 }
-
 void calc_del_position(int i, int j, int *dx, int *dy){
 	// printf("zpos(%d)\n", zero_pos);
 	*dx = geti(zero_pos) - i;
 	*dy = getj(zero_pos) - j;
 }
-
 int move_exists(int dx, int dy, int zero_pos, int *table){
 	// printf("zp(%d %d) (k=%d)\n", geti(zero_pos), getj(zero_pos), zero_pos);
 	if((dx != 0 && dy != 0) || (dx == 0 && dy == 0)) return 0;
@@ -140,7 +148,9 @@ int change_hole_pos_ref(int dx, int dy, int *zpos, int *table){
 	}
 	*zpos = swpelk;
 }
-void change_hole_pos(int dx, int dy) { change_hole_pos_ref(dx,dy, &zero_pos, table); }
+void change_hole_pos(int dx, int dy) {
+	change_hole_pos_ref(dx,dy, &zero_pos, table);
+}
 void click_elem(int i, int j){
 	int elemk, del_p[2];
 
@@ -177,7 +187,6 @@ int *create_table_copy(int *ogtable, int *zpos){
 	}
 	return ctable;
 }
-
 int calc_manhattan_and_hamming(int *table){
 	int k,el, total_manhatten = 0, mh, total_hamming = 0;
 	for(k=1; k<=dim*dim; k++){
@@ -196,11 +205,24 @@ int calc_manhattan_and_hamming(int *table){
 	return total_manhatten+total_hamming;
 }
 
+Node create_node_copy(Node oldnode){
+	static Node copiednode;
+	copiednode.state = create_table_copy(oldnode.state, &oldnode.zpos);
+	copiednode.parentNode = (void*)&oldnode;
+	copiednode.isRootNode = 0;
+	copiednode.childrenNodes = (void*)(malloc(3*sizeof(Node)));
+	copiednode.childrenNodesLen = 0;
+	copiednode.frozen_moves = (void*)(malloc(4*sizeof(int)));
+	copiednode.frozen_moves_len = 0;
+	copiednode.zpos = oldnode.zpos;
+	copiednode.hamming_val = calc_manhattan_and_hamming(copiednode.state);
+	return copiednode;
+}
+
 
 int possible_hole_moves[4][2] = 
 		{  {-1,0}, {1,0},
 		   {0,1}, {0,-1} };
-
 
 int get_manhattan_and_hamming_for_move(int *move, int *table, int*zero_pos){
 	int val, didmove;
@@ -219,11 +241,12 @@ int total_itr = 0;
 
 
 void seed_node(Node rootNode){
-	
+	Node n1 = create_node_copy(rootNode);
+	print_game(n1.state);
 }
 
 
-void seed_node2(int *oldtable, int*frozenmove){
+void seed_node2(int *oldtable, int*frozenmove){//old node seeder
 	// int i;
 	// int zpos;
 	// int *ntable;
@@ -325,13 +348,13 @@ void init_puzzle(){
 	int frozenmove[2] = {0,0};
 	table = malloc(dim*dim*sizeof(int));
 	fill_table_random();
-	print_game(table);
-	Node rootNode = {.state=table,.hamming_val=0,.frozen_moves=NULL,.frozen_moves_len=0,.parentNode=NULL, .childrenNodes=NULL,.rootNode=0, .zpos=zero_pos};
+	// print_game(table);
+	Node rootNode = {.state=table,.hamming_val=0,.frozen_moves=NULL,.frozen_moves_len=0,.parentNode=NULL, .childrenNodes=NULL,.isRootNode=1, .zpos=zero_pos};
 	// solve_bruteforce(table, &zero_pos,frozenmove);
 	solve_bruteforce(rootNode);
 	// change_hole_pos(-1,0);
 	printf("\nLatest solution is with %d iters:\n", total_itr);
 	print_game(table);
-	// printf("total M+H = %d\n", calc_manhattan_and_hamming(table));
+	printf("total M+H = %d\n", calc_manhattan_and_hamming(table));
 }
 
