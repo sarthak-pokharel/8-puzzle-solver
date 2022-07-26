@@ -11,6 +11,17 @@ int zero_pos;
 int solved = 0;
 int shuffle_iterations = 6;
 
+typedef struct NodeChild
+{
+	int *state; //Table
+	int hamming_val; //Hamming value for current node 
+	int frozen_moves[3]; // List of frozen moves
+	int frozen_moves_len; //Length of valid frozen moves
+	struct NodeChild *parentNode; //Origin node
+	struct NodeChild **childrenNodes; // List of children Nodes
+	int childrenNodesLen; //Length of list of children nodes
+} Node;
+
 // Tools
 int sgn(int x){return x>0?1:(x<0?-1:0);}
 int geti(int k){ return (k-1)/dim+1;}
