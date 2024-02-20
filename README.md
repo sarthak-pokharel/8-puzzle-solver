@@ -2,6 +2,6 @@
 # 8-bit puzzle solver
 
 
-References
+References:
 
 https://deniz.co/8-puzzle-solver/
